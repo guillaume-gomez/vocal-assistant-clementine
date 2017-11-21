@@ -3,9 +3,9 @@ const recognition = new SpeechRecognition();
 
 recognition.onresult = (event) => {
   // event is a SpeechRecognitionEvent and it holds all the lines captured so far
-  
+
   // get the current line
-  var current = event.resultIndex; 
+  var current = event.resultIndex;
 
   // get the recognized text
   var transcript = event.results[current][0].transcript;
@@ -13,4 +13,15 @@ recognition.onresult = (event) => {
   console.log(transcript);
 }
 
-recognition.start();
+recognition.onstart = () => {
+  console.log("voice recognition activated");
+}
+
+recognition.onend = () => {
+  console.log("voice recognition ended");
+  recognition.start();
+}
+
+recognition.onerror = (event) => {
+  console.error(event);
+}
