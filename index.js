@@ -1,12 +1,12 @@
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
-// init parser
 if (annyang) {
   // Let's define our first command. First the text we expect, and then the function it should call
+  // action is a variable and will get passed to the calling function
   var commands = {
-    'show tps report': function() {
-      $('#tpsreport').animate({bottom: '-100px'});
+    'music :action': function(action) {
+      console.log(action);
     }
   };
 
