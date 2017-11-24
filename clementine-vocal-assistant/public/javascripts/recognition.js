@@ -1,12 +1,23 @@
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
+import annyang from "annyang";
+
 if (annyang) {
   // Let's define our first command. First the text we expect, and then the function it should call
   // action is a variable and will get passed to the calling function
   var commands = {
-    'music :action': function(action) {
-      console.log(action);
+    'music :action': (action) => {
+      const url = 'http://localhost:3000/music/' + action;
+      return fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(() => {
+        console.log('executed action');
+      })
     }
   };
 
@@ -41,3 +52,4 @@ recognition.onend = () => {
 recognition.onerror = (event) => {
   console.error(event);
 }
+console.log("JFDJKLDKJKDJJKDLJFKLDJKFJ")
