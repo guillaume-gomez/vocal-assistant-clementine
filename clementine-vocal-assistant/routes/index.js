@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const { spawn } = require('child_process');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -9,11 +10,15 @@ router.get('/', function(req, res, next) {
 router.get('/music/:action', (req, res) => {
   const options = parseOptions(req.params.action.toLowerCase());
   console.log(options)
-  // const command = spawn('clementine', options, {
-  //   detached: true,
-  //   stdio: 'ignore'
-  // });
-
+  if (options.length === 0) {
+    res.sendStatus(200);
+    return;
+  }
+  const command = spawn('clementine', options, {
+    detached: true,
+    stdio: 'ignore'
+  });
+  
   // command.on('close', (code, signal) => {
   //   const optionsStr = options && options.length ? options.join(' ') : ''
   //   this
@@ -21,7 +26,7 @@ router.get('/music/:action', (req, res) => {
   //     .info(`finished executing command to ${this.bin} with ${optionsStr}`);
   // });
 
-  // command.unref();
+  command.unref();
 
   res.sendStatus(200);
 });

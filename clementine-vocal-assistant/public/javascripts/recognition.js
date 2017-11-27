@@ -1,8 +1,6 @@
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new SpeechRecognition();
 
-import annyang from "annyang";
-
 if (annyang) {
   // Let's define our first command. First the text we expect, and then the function it should call
   // action is a variable and will get passed to the calling function
@@ -24,32 +22,31 @@ if (annyang) {
   // Add our commands to annyang
   annyang.addCommands(commands);
 
+  //annyang.setLanguage("fr-FR")
+
   // Start listening. You can call this here, or attach this call to an event, button, etc.
-  annyang.start();
+  annyang.start({ autoRestart: true, continuous: false });
+
+  annyang.addCallback('soundstart', function() {
+    console.log('sound detected');
+  });
+
+  annyang.addCallback('result', function(phrases) {
+    console.log("I think the user said: ", phrases[0]);
+    console.log("But then again, it could be any of the following: ", phrases);
+  });
+
+  annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
+    console.log(userSaid); // sample output: 'hello'
+    console.log(commandText); // sample output: 'hello (there)'
+    console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
+  });
+
+  annyang.addCallback('resultNoMatch', function(phrases) {
+    console.log("I think the user said: ", phrases[0]);
+    console.log("But then again, it could be any of the following: ", phrases);
+  });
+
+} else {
+   console.error("Speech Recognition is not supported");
 }
-
-recognition.onresult = (event) => {
-  // event is a SpeechRecognitionEvent and it holds all the lines captured so far
-
-  // get the current line
-  var current = event.resultIndex;
-
-  // get the recognized text
-  var transcript = event.results[current][0].transcript;
-
-  console.log(transcript);
-}
-
-recognition.onstart = () => {
-  console.log("voice recognition activated");
-}
-
-recognition.onend = () => {
-  console.log("voice recognition ended");
-  recognition.start();
-}
-
-recognition.onerror = (event) => {
-  console.error(event);
-}
-console.log("JFDJKLDKJKDJJKDLJFKLDJKFJ")
