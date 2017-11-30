@@ -3,9 +3,9 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  entry: path.join(__dirname, 'src/static/js', 'app-client.js'),
+  entry: path.join(__dirname, 'public', 'javascripts', 'app-client.js'),
   output: {
-    path: path.join(__dirname, 'src', 'static', 'js'),
+    path: path.join(__dirname, 'public', 'javascripts'),
     filename: 'bundle.js'
   },
   module: {
