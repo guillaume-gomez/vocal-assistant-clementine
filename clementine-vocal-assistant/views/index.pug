@@ -1,7 +1,8 @@
 extends layout
 
 block content
-  h1 Says one of these words to enable clementine player 
+  div(class='app')
+  h1 Says one of these words to enable clementine player
   - var list = ["Play", "Stop", "Pause", "Volume up", "Volume down", "Next", "Previous"]
     each item in list
       li= item
