@@ -1,35 +1,24 @@
-// webpack.config.js
-const webpack = require('webpack');
-const path = require('path');
+var webpack = require('webpack');
+var path = require('path');
 
-module.exports = {
-  entry: path.join(__dirname, 'public', 'javascripts', 'app-client.js'),
+var BUILD_DIR = path.resolve(__dirname, 'public/javascripts');
+var APP_DIR = path.resolve(__dirname, 'public/javascripts');
+
+var config = {
+  entry: APP_DIR + '/app-client.js',
   output: {
-    path: path.join(__dirname, 'public', 'javascripts'),
+    path: BUILD_DIR,
     filename: 'bundle.js'
   },
-  module: {
-    loaders: [{
-      test: path.join(__dirname, 'src'),
-      loader: ['babel-loader'],
-      query: {
-        cacheDirectory: 'babel_cache',
-        presets: ['react', 'es2015']
+  module : {
+    loaders : [
+      {
+        test : /\.jsx?/,
+        include : APP_DIR,
+        loader : 'babel'
       }
-    }]
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-      mangle: true,
-      sourcemap: false,
-      beautify: false,
-      dead_code: true
-    })
-  ]
+    ]
+  }
 };
+
+module.exports = config;
