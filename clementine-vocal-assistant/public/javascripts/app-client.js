@@ -5,7 +5,7 @@ class App extends React.Component {
 
   constructor() {
     super();
-    [].forEach(item => {
+    ["renderListOfCommands"].forEach(item => {
       this[item] = this[item].bind(this);
     });
     this.state = {};
@@ -27,9 +27,22 @@ class App extends React.Component {
     }
   }
 
+  renderListOfCommands() {
+    const list = ["Play", "Stop", "Pause", "Volume up", "Volume down", "Next", "Previous"];
+    const lis = list.map((item, index) => {
+      return (<li key={index}>{item}</li>);
+    });
+    return (<ul>{lis}</ul>);
+  }
+
+
   render () {
-    return (<h1>"Hi i"m a react component"</h1>);
+    return (
+      <div>
+        <h1> Says one of these words to enable clementine player </h1>
+        {this.renderListOfCommands()}
+      </div>
+    );
   }
 }
-console.log("binouzes");
 render(<App/>, document.getElementById('app'));
