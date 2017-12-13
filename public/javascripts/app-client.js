@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { Jumbotron, PageHeader } from 'react-bootstrap';
 
 class App extends React.Component {
 
@@ -38,9 +39,12 @@ class App extends React.Component {
 
   render () {
     return (
-      <div>
-        <h1> Says one of these words to enable clementine player </h1>
-        {this.renderListOfCommands()}
+      <div className="container-fluid">
+         <PageHeader>Example page header <small>Subtext for header</small></PageHeader>
+         <Jumbotron>
+          <h1> Says one of these words to enable clementine player </h1>
+          {this.renderListOfCommands()}
+        </Jumbotron>
       </div>
     );
   }
