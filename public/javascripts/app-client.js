@@ -13,7 +13,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log("hjsd")
   }
 
   getParams(data) {
@@ -40,9 +39,9 @@ class App extends React.Component {
   render () {
     return (
       <div className="container-fluid">
-         <PageHeader>Example page header <small>Subtext for header</small></PageHeader>
+         <PageHeader>Clementine Vocal Assistant <small> Made in NodeJS</small></PageHeader>
          <Jumbotron>
-          <h1> Says one of these words to enable clementine player </h1>
+          <h3> Says one of these words to enable clementine player </h3>
           {this.renderListOfCommands()}
         </Jumbotron>
       </div>

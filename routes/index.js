@@ -18,7 +18,7 @@ router.get('/music/:action', (req, res) => {
     detached: true,
     stdio: 'ignore'
   });
-  
+
   // command.on('close', (code, signal) => {
   //   const optionsStr = options && options.length ? options.join(' ') : ''
   //   this
