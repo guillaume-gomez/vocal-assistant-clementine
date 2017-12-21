@@ -84,9 +84,7 @@
 	
 	  _createClass(App, [{
 	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      console.log("hjsd");
-	    }
+	    value: function componentDidMount() {}
 	  }, {
 	    key: 'getParams',
 	    value: function getParams(data) {
@@ -127,18 +125,18 @@
 	        _react2.default.createElement(
 	          _reactBootstrap.PageHeader,
 	          null,
-	          'Example page header ',
+	          'Clementine Vocal Assistant ',
 	          _react2.default.createElement(
 	            'small',
 	            null,
-	            'Subtext for header'
+	            ' Made in NodeJS'
 	          )
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Jumbotron,
 	          null,
 	          _react2.default.createElement(
-	            'h1',
+	            'h3',
 	            null,
 	            ' Says one of these words to enable clementine player '
 	          ),
