@@ -30,9 +30,9 @@ class App extends React.Component {
   renderListOfCommands() {
     const list = ["Play", "Stop", "Pause", "Volume up", "Volume down", "Next", "Previous"];
     const lis = list.map((item, index) => {
-      return (<li key={index}>{item}</li>);
+      return (<li key={index} className="list-group-item">{item}</li>);
     });
-    return (<ul>{lis}</ul>);
+    return (<ul className="list-group">{lis}</ul>);
   }
 
 

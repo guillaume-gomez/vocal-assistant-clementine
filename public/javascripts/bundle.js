@@ -106,13 +106,13 @@
 	      var lis = list.map(function (item, index) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: index },
+	          { key: index, className: 'list-group-item' },
 	          item
 	        );
 	      });
 	      return _react2.default.createElement(
 	        'ul',
-	        null,
+	        { className: 'list-group' },
 	        lis
 	      );
 	    }
