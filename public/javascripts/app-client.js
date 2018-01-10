@@ -28,9 +28,20 @@ class App extends React.Component {
   }
 
   renderListOfCommands() {
-    const list = ["Play", "Stop", "Pause", "Volume up", "Volume down", "Next", "Previous"];
-    const lis = list.map((item, index) => {
-      return (<li key={index} className="list-group-item">{item}</li>);
+    const list = [
+      ["Play", "play"],
+      ["Stop", "stop"],
+      ["Pause", "pause"],
+      ["Volume up", "volume-up"],
+      ["Volume down", "volume-down"],
+      ["Next", "next"],
+      ["Previous", "previous"]];
+    const lis = list.map(([item, icon], index) => {
+      return (
+        <li key={index} className="list-group-item">
+          <span className={`glyphicon glyphicon-${icon}`}></span>
+          {item}
+        </li>);
     });
     return (<ul className="list-group">{lis}</ul>);
   }
