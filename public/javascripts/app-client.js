@@ -34,13 +34,13 @@ class App extends React.Component {
       ["Pause", "pause"],
       ["Volume up", "volume-up"],
       ["Volume down", "volume-down"],
-      ["Next", "next"],
-      ["Previous", "previous"]];
+      ["Next", "fast-backward"],
+      ["Previous", "fast-forward"]];
     const lis = list.map(([item, icon], index) => {
       return (
         <li key={index} className="list-group-item">
-          <span className={`glyphicon glyphicon-${icon}`}></span>
-          {item}
+          <span className={`glyphicon glyphicon-${icon}`} ariaHidden={true}></span>
+          {" " + item}
         </li>);
     });
     return (<ul className="list-group">{lis}</ul>);

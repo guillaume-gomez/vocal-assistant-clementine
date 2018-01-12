@@ -104,7 +104,7 @@
 	  }, {
 	    key: 'renderListOfCommands',
 	    value: function renderListOfCommands() {
-	      var list = [["Play", "play-circle"], ["Stop", "play-circle"], ["Pause", "play-circle"], ["Volume up", "volume-up"], ["Volume down", "volume-down"], ["Next", "play-circle"], ["Previous", "play-circle"]];
+	      var list = [["Play", "play"], ["Stop", "stop"], ["Pause", "pause"], ["Volume up", "volume-up"], ["Volume down", "volume-down"], ["Next", "fast-backward"], ["Previous", "fast-forward"]];
 	      var lis = list.map(function (_ref, index) {
 	        var _ref2 = _slicedToArray(_ref, 2),
 	            item = _ref2[0],
@@ -113,8 +113,8 @@
 	        return _react2.default.createElement(
 	          'li',
 	          { key: index, className: 'list-group-item' },
-	          _react2.default.createElement('span', { className: 'glyphicon glyphicon-' + icon }),
-	          item
+	          _react2.default.createElement('span', { className: 'glyphicon glyphicon-' + icon, ariaHidden: true }),
+	          " " + item
 	        );
 	      });
 	      return _react2.default.createElement(
