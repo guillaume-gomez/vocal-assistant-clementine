@@ -29,25 +29,31 @@ class Notification extends React.Component {
 
   render () {
     const { show } = this.state;
+    const { alertType, message } = this.props;
     if(show === false) {
       return null;
     }
 
     return (
-      <Alert bsStyle="danger" onDismiss={this.handleDismiss}>
-        <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good
+      <Alert bsStyle={alertType} onDismiss={this.handleDismiss}>
+        {message}
       </Alert>
     );
   }
 }
 
 Notification.propTypes = {
-  idNotification: PropTypes.number,
-  onDismissCallback: PropTypes.func
+  idNotification: PropTypes.string,
+  alertType: PropTypes.string,
+  message:  PropTypes.string,
+  onDismissCallback: PropTypes.func,
+  duration: PropTypes.number
 };
 
 Notification.defaultProps = {
-  idNotification: 1,
+  idNotification: "1",
+  alertType: "info",
+  message: "Notification",
   onDismissCallback: () => {},
 }
 
