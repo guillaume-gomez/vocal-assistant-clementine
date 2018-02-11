@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'react-bootstrap';
-
 
 class Notification extends React.Component {
 
@@ -13,7 +13,9 @@ class Notification extends React.Component {
   }
 
   handleDismiss() {
+    const { onDismissCallback, idNotification } = this.props;
     this.setState({ show: false });
+    onDismissCallback(idNotification);
   }
 
   componentDidMount() {
@@ -24,7 +26,6 @@ class Notification extends React.Component {
       }, duration)
     }
   }
-
 
   render () {
     const { show } = this.state;
@@ -38,6 +39,16 @@ class Notification extends React.Component {
       </Alert>
     );
   }
+}
+
+Notification.propTypes = {
+  idNotification: PropTypes.number,
+  onDismissCallback: PropTypes.func
+};
+
+Notification.defaultProps = {
+  idNotification: 1,
+  onDismissCallback: () => {},
 }
 
 export default Notification;
