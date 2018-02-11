@@ -43033,12 +43033,12 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
-	      _recognition2.default.addCallback('result', function (phrases) {
-	        _this2.addNotification("info", 'Action performed name "' + phrases[0] + '"');
+	      _recognition2.default.addCallback('resultMatch', function (userSaid, commandText, phrases) {
+	        _this2.addNotification("info", 'I understood -->: "' + userSaid + '"');
 	      });
 	
 	      _recognition2.default.addCallback('resultNoMatch', function (phrases) {
-	        _this2.addNotification("danger", 'Result not match "' + phrases[0] + '"');
+	        _this2.addNotification("danger", 'Resulat not match. I think you said: "' + phrases[0] + '"');
 	      });
 	    }
 	  }, {
