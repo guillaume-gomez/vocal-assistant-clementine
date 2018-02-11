@@ -4,7 +4,7 @@ const { spawn } = require('child_process');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'Clementine Vocal Assistant' });
 });
 
 router.get('/music/:action', (req, res) => {
@@ -27,7 +27,6 @@ router.get('/music/:action', (req, res) => {
   // });
 
   command.unref();
-
   res.sendStatus(200);
 });
 
