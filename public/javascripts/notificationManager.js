@@ -27,7 +27,11 @@ class NotificationManager extends React.Component {
 
   addNotification(alertType, message) {
     const { notifications } = this.state;
-    const notification = { idNotification: uuidv4(), message, alertType };
+    const id = uuidv4();
+    setTimeout(() => {
+      this.removeNotification(id);
+    }, 10000);
+    const notification = { idNotification: id, message, alertType };
     const newNotifications = notifications.slice();
     this.setState({ notifications: [...newNotifications, notification] });
   }
@@ -35,19 +39,17 @@ class NotificationManager extends React.Component {
   removeNotification(id) {
     const { notifications } = this.state;
     const newNotifications = notifications.slice().filter(notification => { return notification.idNotification !== id });
-    //this.setState({ notifications: newNotifications });
+    this.setState({ notifications: newNotifications });
   }
 
   render () {
     const { notifications } = this.state;
-    console.log(notifications);
     const notificationsTag = notifications.map(notification => { 
       return (<Notification
+        key={notification.idNotification}
         idNotification={notification.idNotification}
         message={notification.message}
         alertType={notification.alertType}
-        onDismissCallback={this.removeNotification}
-        duration={10000}
       />);
     }); 
     return (

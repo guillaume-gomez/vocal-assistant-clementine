@@ -18,15 +18,6 @@ class Notification extends React.Component {
     onDismissCallback(idNotification);
   }
 
-  componentDidMount() {
-    const { duration } = this.props;
-    if(duration) {
-      setTimeout(() => {
-        this.handleDismiss();
-      }, duration)
-    }
-  }
-
   render () {
     const { show } = this.state;
     const { alertType, message } = this.props;
@@ -45,16 +36,13 @@ class Notification extends React.Component {
 Notification.propTypes = {
   idNotification: PropTypes.string,
   alertType: PropTypes.string,
-  message:  PropTypes.string,
-  onDismissCallback: PropTypes.func,
-  duration: PropTypes.number
+  message:  PropTypes.string
 };
 
 Notification.defaultProps = {
   idNotification: "1",
   alertType: "info",
-  message: "Notification",
-  onDismissCallback: () => {},
+  message: "Notification"
 }
 
 export default Notification;

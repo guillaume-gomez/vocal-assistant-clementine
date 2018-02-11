@@ -43044,9 +43044,15 @@
 	  }, {
 	    key: 'addNotification',
 	    value: function addNotification(alertType, message) {
+	      var _this3 = this;
+	
 	      var notifications = this.state.notifications;
 	
-	      var notification = { idNotification: (0, _v2.default)(), message: message, alertType: alertType };
+	      var id = (0, _v2.default)();
+	      setTimeout(function () {
+	        _this3.removeNotification(id);
+	      }, 10000);
+	      var notification = { idNotification: id, message: message, alertType: alertType };
 	      var newNotifications = notifications.slice();
 	      this.setState({ notifications: [].concat(_toConsumableArray(newNotifications), [notification]) });
 	    }
@@ -43058,23 +43064,19 @@
 	      var newNotifications = notifications.slice().filter(function (notification) {
 	        return notification.idNotification !== id;
 	      });
-	      //this.setState({ notifications: newNotifications });
+	      this.setState({ notifications: newNotifications });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
-	
 	      var notifications = this.state.notifications;
 	
-	      console.log(notifications);
 	      var notificationsTag = notifications.map(function (notification) {
 	        return _react2.default.createElement(_notification2.default, {
+	          key: notification.idNotification,
 	          idNotification: notification.idNotification,
 	          message: notification.message,
-	          alertType: notification.alertType,
-	          onDismissCallback: _this3.removeNotification,
-	          duration: 10000
+	          alertType: notification.alertType
 	        });
 	      });
 	      return _react2.default.createElement(
@@ -43260,19 +43262,6 @@
 	      onDismissCallback(idNotification);
 	    }
 	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-	
-	      var duration = this.props.duration;
-	
-	      if (duration) {
-	        setTimeout(function () {
-	          _this2.handleDismiss();
-	        }, duration);
-	      }
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var show = this.state.show;
@@ -43298,16 +43287,13 @@
 	Notification.propTypes = {
 	  idNotification: _propTypes2.default.string,
 	  alertType: _propTypes2.default.string,
-	  message: _propTypes2.default.string,
-	  onDismissCallback: _propTypes2.default.func,
-	  duration: _propTypes2.default.number
+	  message: _propTypes2.default.string
 	};
 	
 	Notification.defaultProps = {
 	  idNotification: "1",
 	  alertType: "info",
-	  message: "Notification",
-	  onDismissCallback: function onDismissCallback() {}
+	  message: "Notification"
 	};
 	
 	exports.default = Notification;
