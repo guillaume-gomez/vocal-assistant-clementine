@@ -145,7 +145,13 @@
 	          _react2.default.createElement(
 	            'h3',
 	            null,
-	            ' Says one of these words to enable clementine player '
+	            ' Says ',
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              ' Play '
+	            ),
+	            ' plus one of these words to enable clementine player '
 	          ),
 	          this.renderListOfCommands()
 	        )
