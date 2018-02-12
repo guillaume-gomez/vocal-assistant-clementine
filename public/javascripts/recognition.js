@@ -22,31 +22,32 @@ if (annyang) {
   // Add our commands to annyang
   annyang.addCommands(commands);
 
-  //annyang.setLanguage("fr-FR")
-
   // Start listening. You can call this here, or attach this call to an event, button, etc.
   annyang.start({ autoRestart: true, continuous: false });
 
-  annyang.addCallback('soundstart', function() {
-    console.log('sound detected');
-  });
 
-  annyang.addCallback('result', function(phrases) {
-    console.log("I think the user said: ", phrases[0]);
-    console.log("But then again, it could be any of the following: ", phrases);
-  });
+  // annyang.addCallback('soundstart', function() {
+  //   console.log('sound detected');
+  // });
 
-  annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
-    console.log(userSaid); // sample output: 'hello'
-    console.log(commandText); // sample output: 'hello (there)'
-    console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
-  });
+  // annyang.addCallback('result', function(phrases) {
+  //   console.log("I think the user said: ", phrases[0]);
+  //   console.log("But then again, it could be any of the following: ", phrases);
+  // });
 
-  annyang.addCallback('resultNoMatch', function(phrases) {
-    console.log("I think the user said: ", phrases[0]);
-    console.log("But then again, it could be any of the following: ", phrases);
-  });
+  // annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
+  //   console.log(userSaid); // sample output: 'hello'
+  //   console.log(commandText); // sample output: 'hello (there)'
+  //   console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
+  // });
+
+  // annyang.addCallback('resultNoMatch', function(phrases) {
+  //   console.log("I think the user said: ", phrases[0]);
+  //   console.log("But then again, it could be any of the following: ", phrases);
+  // });
 
 } else {
-   console.error("Speech Recognition is not supported");
+  console.error("Speech Recognition is not supported");
 }
+
+export default annyang;

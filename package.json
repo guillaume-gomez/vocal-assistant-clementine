@@ -22,6 +22,7 @@
     "react-bootstrap": "^0.30.10",
     "react-dom": "^15.6.2",
     "serve-favicon": "^2.4.5",
+    "uuid": "^3.2.1",
     "webpack": "^1.13.3"
   },
   "devDependencies": {

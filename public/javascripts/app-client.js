@@ -2,6 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Jumbotron, PageHeader } from 'react-bootstrap';
 
+import NotificationManager from './notificationManager.js';
+
 class App extends React.Component {
 
   constructor() {
@@ -50,9 +52,10 @@ class App extends React.Component {
   render () {
     return (
       <div className="container-fluid">
-         <PageHeader>Clementine Vocal Assistant <small> Made in NodeJS</small></PageHeader>
-         <Jumbotron>
-          <h3> Says one of these words to control clementine player </h3>
+        <PageHeader>Clementine Vocal Assistant <small> Made in NodeJS</small></PageHeader>
+        <NotificationManager/>
+        <Jumbotron>
+          <h3> Says <strong> Music </strong> plus one of these words to control clementine player </h3>
           {this.renderListOfCommands()}
         </Jumbotron>
       </div>

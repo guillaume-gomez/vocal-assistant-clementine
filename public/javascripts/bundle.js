@@ -61,6 +61,10 @@
 	
 	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 184);
 	
+	var _notificationManager = __webpack_require__(/*! ./notificationManager.js */ 438);
+	
+	var _notificationManager2 = _interopRequireDefault(_notificationManager);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -139,13 +143,20 @@
 	            ' Made in NodeJS'
 	          )
 	        ),
+	        _react2.default.createElement(_notificationManager2.default, null),
 	        _react2.default.createElement(
 	          _reactBootstrap.Jumbotron,
 	          null,
 	          _react2.default.createElement(
 	            'h3',
 	            null,
-	            ' Says one of these words to enable clementine player '
+	            ' Says ',
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              ' Music '
+	            ),
+	            ' plus one of these words to control clementine player '
 	          ),
 	          this.renderListOfCommands()
 	        )
@@ -42960,6 +42971,395 @@
 	exports.bootstrapUtils = _bootstrapUtils;
 	exports.createChainedFunction = _createChainedFunction3['default'];
 	exports.ValidComponentChildren = _ValidComponentChildren3['default'];
+
+/***/ }),
+/* 438 */
+/*!***************************************************!*\
+  !*** ./public/javascripts/notificationManager.js ***!
+  \***************************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _v = __webpack_require__(/*! uuid/v4 */ 439);
+	
+	var _v2 = _interopRequireDefault(_v);
+	
+	var _notification = __webpack_require__(/*! ./notification.js */ 442);
+	
+	var _notification2 = _interopRequireDefault(_notification);
+	
+	var _recognition = __webpack_require__(/*! ./recognition.js */ 443);
+	
+	var _recognition2 = _interopRequireDefault(_recognition);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var NotificationManager = function (_React$Component) {
+	  _inherits(NotificationManager, _React$Component);
+	
+	  function NotificationManager() {
+	    _classCallCheck(this, NotificationManager);
+	
+	    var _this = _possibleConstructorReturn(this, (NotificationManager.__proto__ || Object.getPrototypeOf(NotificationManager)).call(this));
+	
+	    ["addNotification", "removeNotification"].forEach(function (item) {
+	      _this[item] = _this[item].bind(_this);
+	    });
+	    _this.state = { notifications: [] };
+	    return _this;
+	  }
+	
+	  _createClass(NotificationManager, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+	
+	      _recognition2.default.addCallback('resultMatch', function (userSaid, commandText, phrases) {
+	        _this2.addNotification("info", 'I understood -->: "' + userSaid + '"');
+	      });
+	
+	      _recognition2.default.addCallback('resultNoMatch', function (phrases) {
+	        _this2.addNotification("danger", 'Resulat not match. I think you said: "' + phrases[0] + '"');
+	      });
+	    }
+	  }, {
+	    key: 'addNotification',
+	    value: function addNotification(alertType, message) {
+	      var _this3 = this;
+	
+	      var notifications = this.state.notifications;
+	
+	      var id = (0, _v2.default)();
+	      setTimeout(function () {
+	        _this3.removeNotification(id);
+	      }, 10000);
+	      var notification = { idNotification: id, message: message, alertType: alertType };
+	      var newNotifications = notifications.slice();
+	      this.setState({ notifications: [].concat(_toConsumableArray(newNotifications), [notification]) });
+	    }
+	  }, {
+	    key: 'removeNotification',
+	    value: function removeNotification(id) {
+	      var notifications = this.state.notifications;
+	
+	      var newNotifications = notifications.slice().filter(function (notification) {
+	        return notification.idNotification !== id;
+	      });
+	      this.setState({ notifications: newNotifications });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var notifications = this.state.notifications;
+	
+	      var notificationsTag = notifications.map(function (notification) {
+	        return _react2.default.createElement(_notification2.default, {
+	          key: notification.idNotification,
+	          idNotification: notification.idNotification,
+	          message: notification.message,
+	          alertType: notification.alertType
+	        });
+	      });
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        notificationsTag
+	      );
+	    }
+	  }]);
+	
+	  return NotificationManager;
+	}(_react2.default.Component);
+	
+	exports.default = NotificationManager;
+
+/***/ }),
+/* 439 */
+/*!**********************!*\
+  !*** ./~/uuid/v4.js ***!
+  \**********************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	var rng = __webpack_require__(/*! ./lib/rng */ 440);
+	var bytesToUuid = __webpack_require__(/*! ./lib/bytesToUuid */ 441);
+	
+	function v4(options, buf, offset) {
+	  var i = buf && offset || 0;
+	
+	  if (typeof(options) == 'string') {
+	    buf = options === 'binary' ? new Array(16) : null;
+	    options = null;
+	  }
+	  options = options || {};
+	
+	  var rnds = options.random || (options.rng || rng)();
+	
+	  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+	  rnds[6] = (rnds[6] & 0x0f) | 0x40;
+	  rnds[8] = (rnds[8] & 0x3f) | 0x80;
+	
+	  // Copy bytes to buffer, if provided
+	  if (buf) {
+	    for (var ii = 0; ii < 16; ++ii) {
+	      buf[i + ii] = rnds[ii];
+	    }
+	  }
+	
+	  return buf || bytesToUuid(rnds);
+	}
+	
+	module.exports = v4;
+
+
+/***/ }),
+/* 440 */
+/*!***********************************!*\
+  !*** ./~/uuid/lib/rng-browser.js ***!
+  \***********************************/
+/***/ (function(module, exports) {
+
+	// Unique ID creation requires a high quality random # generator.  In the
+	// browser this is a little complicated due to unknown quality of Math.random()
+	// and inconsistent support for the `crypto` API.  We do the best we can via
+	// feature-detection
+	
+	// getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+	var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues.bind(crypto)) ||
+	                      (typeof(msCrypto) != 'undefined' && msCrypto.getRandomValues.bind(msCrypto));
+	if (getRandomValues) {
+	  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
+	  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
+	
+	  module.exports = function whatwgRNG() {
+	    getRandomValues(rnds8);
+	    return rnds8;
+	  };
+	} else {
+	  // Math.random()-based (RNG)
+	  //
+	  // If all else fails, use Math.random().  It's fast, but is of unspecified
+	  // quality.
+	  var rnds = new Array(16);
+	
+	  module.exports = function mathRNG() {
+	    for (var i = 0, r; i < 16; i++) {
+	      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
+	      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+	    }
+	
+	    return rnds;
+	  };
+	}
+
+
+/***/ }),
+/* 441 */
+/*!***********************************!*\
+  !*** ./~/uuid/lib/bytesToUuid.js ***!
+  \***********************************/
+/***/ (function(module, exports) {
+
+	/**
+	 * Convert array of 16 byte values to UUID string format of the form:
+	 * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+	 */
+	var byteToHex = [];
+	for (var i = 0; i < 256; ++i) {
+	  byteToHex[i] = (i + 0x100).toString(16).substr(1);
+	}
+	
+	function bytesToUuid(buf, offset) {
+	  var i = offset || 0;
+	  var bth = byteToHex;
+	  return bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] + '-' +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]] +
+	          bth[buf[i++]] + bth[buf[i++]];
+	}
+	
+	module.exports = bytesToUuid;
+
+
+/***/ }),
+/* 442 */
+/*!********************************************!*\
+  !*** ./public/javascripts/notification.js ***!
+  \********************************************/
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _propTypes = __webpack_require__(/*! prop-types */ 271);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _reactBootstrap = __webpack_require__(/*! react-bootstrap */ 184);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Notification = function (_React$Component) {
+	  _inherits(Notification, _React$Component);
+	
+	  function Notification() {
+	    _classCallCheck(this, Notification);
+	
+	    var _this = _possibleConstructorReturn(this, (Notification.__proto__ || Object.getPrototypeOf(Notification)).call(this));
+	
+	    ["handleDismiss"].forEach(function (item) {
+	      _this[item] = _this[item].bind(_this);
+	    });
+	    _this.state = { show: true };
+	    return _this;
+	  }
+	
+	  _createClass(Notification, [{
+	    key: 'handleDismiss',
+	    value: function handleDismiss() {
+	      var _props = this.props,
+	          onDismissCallback = _props.onDismissCallback,
+	          idNotification = _props.idNotification;
+	
+	      this.setState({ show: false });
+	      onDismissCallback(idNotification);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var show = this.state.show;
+	      var _props2 = this.props,
+	          alertType = _props2.alertType,
+	          message = _props2.message;
+	
+	      if (show === false) {
+	        return null;
+	      }
+	
+	      return _react2.default.createElement(
+	        _reactBootstrap.Alert,
+	        { bsStyle: alertType, onDismiss: this.handleDismiss },
+	        message
+	      );
+	    }
+	  }]);
+	
+	  return Notification;
+	}(_react2.default.Component);
+	
+	Notification.propTypes = {
+	  idNotification: _propTypes2.default.string,
+	  alertType: _propTypes2.default.string,
+	  message: _propTypes2.default.string
+	};
+	
+	Notification.defaultProps = {
+	  idNotification: "1",
+	  alertType: "info",
+	  message: "Notification"
+	};
+	
+	exports.default = Notification;
+
+/***/ }),
+/* 443 */
+/*!*******************************************!*\
+  !*** ./public/javascripts/recognition.js ***!
+  \*******************************************/
+/***/ (function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+	var recognition = new SpeechRecognition();
+	
+	if (annyang) {
+	  // Let's define our first command. First the text we expect, and then the function it should call
+	  // action is a variable and will get passed to the calling function
+	  var commands = {
+	    'music :action': function musicAction(action) {
+	      var url = 'http://localhost:3000/music/' + action;
+	      return fetch(url, {
+	        method: 'GET',
+	        headers: {
+	          'Content-Type': 'application/json'
+	        }
+	      }).then(function () {
+	        console.log('executed action');
+	      });
+	    }
+	  };
+	
+	  // Add our commands to annyang
+	  annyang.addCommands(commands);
+	
+	  // Start listening. You can call this here, or attach this call to an event, button, etc.
+	  annyang.start({ autoRestart: true, continuous: false });
+	
+	  // annyang.addCallback('soundstart', function() {
+	  //   console.log('sound detected');
+	  // });
+	
+	  // annyang.addCallback('result', function(phrases) {
+	  //   console.log("I think the user said: ", phrases[0]);
+	  //   console.log("But then again, it could be any of the following: ", phrases);
+	  // });
+	
+	  // annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
+	  //   console.log(userSaid); // sample output: 'hello'
+	  //   console.log(commandText); // sample output: 'hello (there)'
+	  //   console.log(phrases); // sample output: ['hello', 'halo', 'yellow', 'polo', 'hello kitty']
+	  // });
+	
+	  // annyang.addCallback('resultNoMatch', function(phrases) {
+	  //   console.log("I think the user said: ", phrases[0]);
+	  //   console.log("But then again, it could be any of the following: ", phrases);
+	  // });
+	} else {
+	  console.error("Speech Recognition is not supported");
+	}
+	
+	exports.default = annyang;
 
 /***/ })
 /******/ ]);
