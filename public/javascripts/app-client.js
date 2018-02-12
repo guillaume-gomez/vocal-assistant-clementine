@@ -52,7 +52,7 @@ class App extends React.Component {
       <div className="container-fluid">
          <PageHeader>Clementine Vocal Assistant <small> Made in NodeJS</small></PageHeader>
          <Jumbotron>
-          <h3> Says one of these words to enable clementine player </h3>
+          <h3> Says one of these words to control clementine player </h3>
           {this.renderListOfCommands()}
         </Jumbotron>
       </div>
