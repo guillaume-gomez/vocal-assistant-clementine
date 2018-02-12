@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Jumbotron, PageHeader } from 'react-bootstrap';
 
 import NotificationManager from './notificationManager.js';
+import annyang from './recognition.js';
 
 class App extends React.Component {
 
@@ -50,6 +51,17 @@ class App extends React.Component {
 
 
   render () {
+    if(!annyang) {
+      return (
+      <div className="container-fluid">
+        <PageHeader>Clementine Vocal Assistant <small> Made in NodeJS</small></PageHeader>
+        <Jumbotron>
+          <h3> Voice recognition only works with Chrome browser </h3>
+        </Jumbotron>
+      </div>
+      );
+    }
+
     return (
       <div className="container-fluid">
         <PageHeader>Clementine Vocal Assistant <small> Made in NodeJS</small></PageHeader>

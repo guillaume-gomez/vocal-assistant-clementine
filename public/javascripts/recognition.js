@@ -1,7 +1,7 @@
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-const recognition = new SpeechRecognition();
 
-if (annyang) {
+if (annyang && SpeechRecognition) {
+  const recognition = new SpeechRecognition();
   // Let's define our first command. First the text we expect, and then the function it should call
   // action is a variable and will get passed to the calling function
   var commands = {

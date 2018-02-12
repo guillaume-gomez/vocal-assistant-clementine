@@ -65,6 +65,10 @@
 	
 	var _notificationManager2 = _interopRequireDefault(_notificationManager);
 	
+	var _recognition = __webpack_require__(/*! ./recognition.js */ 443);
+	
+	var _recognition2 = _interopRequireDefault(_recognition);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -130,6 +134,32 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      if (!_recognition2.default) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'container-fluid' },
+	          _react2.default.createElement(
+	            _reactBootstrap.PageHeader,
+	            null,
+	            'Clementine Vocal Assistant ',
+	            _react2.default.createElement(
+	              'small',
+	              null,
+	              ' Made in NodeJS'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Jumbotron,
+	            null,
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              ' Voice recognition only works with Chrome browser '
+	            )
+	          )
+	        );
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container-fluid' },
@@ -43033,13 +43063,15 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 	
-	      _recognition2.default.addCallback('resultMatch', function (userSaid, commandText, phrases) {
-	        _this2.addNotification("info", 'I understood -->: "' + userSaid + '"');
-	      });
+	      if (_recognition2.default) {
+	        _recognition2.default.addCallback('resultMatch', function (userSaid, commandText, phrases) {
+	          _this2.addNotification("info", 'I understood -->: "' + userSaid + '"');
+	        });
 	
-	      _recognition2.default.addCallback('resultNoMatch', function (phrases) {
-	        _this2.addNotification("danger", 'Resulat not match. I think you said: "' + phrases[0] + '"');
-	      });
+	        _recognition2.default.addCallback('resultNoMatch', function (phrases) {
+	          _this2.addNotification("danger", 'Resulat not match. I think you said: "' + phrases[0] + '"');
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'addNotification',
@@ -43311,9 +43343,9 @@
 	  value: true
 	});
 	var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-	var recognition = new SpeechRecognition();
 	
-	if (annyang) {
+	if (annyang && SpeechRecognition) {
+	  var recognition = new SpeechRecognition();
 	  // Let's define our first command. First the text we expect, and then the function it should call
 	  // action is a variable and will get passed to the calling function
 	  var commands = {

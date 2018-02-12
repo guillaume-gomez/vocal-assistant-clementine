@@ -16,13 +16,15 @@ class NotificationManager extends React.Component {
   }
 
   componentDidMount() {
-    annyang.addCallback('resultMatch', (userSaid, commandText, phrases) => {
-      this.addNotification("info", `I understood -->: "${userSaid}"`);
-    });
+    if(annyang) {
+      annyang.addCallback('resultMatch', (userSaid, commandText, phrases) => {
+        this.addNotification("info", `I understood -->: "${userSaid}"`);
+      });
 
-    annyang.addCallback('resultNoMatch', phrases => {
-      this.addNotification("danger", `Resulat not match. I think you said: "${phrases[0]}"`);
-    });
+      annyang.addCallback('resultNoMatch', phrases => {
+        this.addNotification("danger", `Resulat not match. I think you said: "${phrases[0]}"`);
+      });
+    }
   }
 
   addNotification(alertType, message) {
