@@ -2,6 +2,9 @@
 
 **Clementine is mandatory to work properly**
 
+![Preview](./screenshot.png)
+
+
 ## Install clementine (on ubuntu)
 
 ```
