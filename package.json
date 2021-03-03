@@ -17,7 +17,7 @@
     "express": "^4.14.1",
     "font-awesome": "^4.7.0",
     "morgan": "^1.9.1",
-    "pug": "^2.0.0-beta11",
+    "pug": "^3.0.1",
     "react": "^15.6.2",
     "react-bootstrap": "^0.30.10",
     "react-dom": "^15.6.2",
